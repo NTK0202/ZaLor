@@ -1,43 +1,47 @@
-// Walk through all text nodes and replace "Zalo" with "Zalỏ"
 function replaceText(node) {
-  // Only process text nodes
-  if (node.nodeType === Node.TEXT_NODE) {
-    const originalText = node.nodeValue;
-    
-    // Replace different variations of Zalo with Zalỏ
-    let text = originalText;
-    text = text.replace(/Zalo/g, 'Zalỏ');
-    text = text.replace(/zalo/g, 'zalỏ');
-    text = text.replace(/ZALO/g, 'ZALỎ');
-    
-    // Only update if text actually changed
-    if (text !== originalText) {
-      node.nodeValue = text;
+    if (node.nodeName === 'SCRIPT' || node.nodeName === 'STYLE') {
+        return;
     }
-  } else {
-    // Recursively process child nodes
-    for (let i = 0; i < node.childNodes.length; i++) {
-      replaceText(node.childNodes[i]);
+
+    if (node.nodeType === Node.TEXT_NODE) {
+        const originalText = node.nodeValue;
+
+        let text = originalText;
+        text = text.replace(/zalo/gi, match => {
+            if (match === match.toUpperCase()) {
+                return 'ZALỎ';
+            }
+
+            if (match === match.toLowerCase()) {
+                return 'zalỏ';
+            }
+
+            return 'Zalỏ';
+        });
+
+        if (text !== originalText) {
+            node.nodeValue = text;
+        }
+    } else if (node.childNodes) {
+        for (let i = 0; i < node.childNodes.length; i++) {
+            replaceText(node.childNodes[i]);
+        }
     }
-  }
 }
 
-// Replace text in the entire document
 if (document.body) {
-  replaceText(document.body);
+    replaceText(document.body);
 
-  // Watch for dynamically added content
-  const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-      mutation.addedNodes.forEach(function(node) {
-        replaceText(node);
-      });
+    const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            mutation.addedNodes.forEach(function (node) {
+                replaceText(node);
+            });
+        });
     });
-  });
 
-  // Start observing the document with the configured parameters
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 }
