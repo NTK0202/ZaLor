@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZaLor Extension Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #0084ff;
+        }
+        .test-section {
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        button {
+            background-color: #0084ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0066cc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Page for ZaLor Extension</h1>
+    
+    <div class="test-section">
+        <h2>Static Text Test</h2>
+        <p>This is a test for the Zalo to Zalỏ extension.</p>
+        <p>Different cases:</p>
+        <ul>
+            <li>Zalo should become Zalỏ</li>
+            <li>zalo should become zalỏ</li>
+            <li>ZALO should become ZALỎ</li>
+            <li>Using Zalo app for messaging is popular in Vietnam</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>Dynamic Content Test</h2>
+        <p>Click the button below to add dynamic content:</p>
+        <button onclick="addDynamicContent()">Add Dynamic Zalo Content</button>
+        <div id="dynamic-content"></div>
+    </div>
+
+    <script>
+        let counter = 0;
+        function addDynamicContent() {
+            counter++;
+            const div = document.getElementById('dynamic-content');
+            const newParagraph = document.createElement('p');
+            newParagraph.textContent = `Dynamic content #${counter}: Zalo is a messaging app. I use zalo every day. ZALO is great!`;
+            div.appendChild(newParagraph);
+        }
+    </script>
+</body>
+</html>
